@@ -14,12 +14,13 @@ git clone https://github.com/Airmomo/commands.git && cp -r commands/* ~/.claude/
 
 ### 开箱即用
 
-| 命令                                     | 简述                    |
-| ---------------------------------------- | ----------------------- |
-| [/think](./think.md)                     | 基础思考增强            |
-| [/megathink](./megathink.md)             | 深度思考，综合分析      |
-| [/ultrathink](./ultrathink.md)           | 最大化深度分析          |
-| [/git-auto-commit](./git-auto-commit.md) | 分析变更并创建 Git 提交 |
+| 命令                                           | 简述                                        |
+| ---------------------------------------------- | ------------------------------------------- |
+| [/think](./think.md)                           | 基础思考增强                                |
+| [/megathink](./megathink.md)                   | 深度思考，综合分析                          |
+| [/ultrathink](./ultrathink.md)                 | 最大化深度分析                              |
+| [/git-auto-commit](./git-auto-commit.md)       | 分析变更并创建 Git 提交                     |
+| [/github-smart-clone](./github-smart-clone.md) | 智能克隆 Github 仓库，支持仅拉取文件/文件夹 |
 
 ### 需 CLI 支持
 
