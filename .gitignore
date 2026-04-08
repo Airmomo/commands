@@ -207,5 +207,7 @@ marimo/_lsp/
 __marimo__/
 
 # Custom
+.DS_Store
+temp/
 .claude/
-*.sh
+cc-commands-soft-install.sh
