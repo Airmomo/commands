@@ -6,125 +6,71 @@ allowed-tools: Bash
 
 # GitHub 智能克隆命令
 
-根据 URL 自动判断克隆类型：
+你收到用户输入：`$ARGUMENTS`
 
-- **完整仓库**：默认保留 git 历史，`--no-git` 可移除
-- **部分文件/文件夹**：使用 sparse-checkout，不保留 git 历史
+## 约束规则（必须严格遵守）
 
-## 用户输入
+- **禁止探索**：不要使用 Glob、Grep、Read 等工具探索当前代码库，不要检查文件是否已存在
+- **禁止创建额外文件**：只执行 git clone 相关操作，不创建任何辅助脚本、文档、报告或日志文件
+- **禁止过度分析**：直接解析 URL 并执行 Bash 命令完成克隆，不要分多步验证
+- **如果 URL 无法解析**：直接向用户确认，不要自行猜测或搜索
 
-URL: $ARGUMENTS
+## 参数验证
 
-## 执行步骤
+如果 `$ARGUMENTS` 为空或未匹配到有效的 GitHub URL，直接告知用户正确用法并停止：
 
-### 1. 解析 URL 判断克隆类型
+```
+/github-smart-clone <github-url> [--no-git]
+```
 
-分析用户提供的 GitHub URL，识别以下模式：
-
-**完整仓库 URL 格式：**
-
+有效的 GitHub URL 格式：
 - `https://github.com/owner/repo`
 - `https://github.com/owner/repo.git`
 - `git@github.com:owner/repo.git`
+- `https://github.com/owner/repo/tree/{branch}/path`
+- `https://github.com/owner/repo/blob/{branch}/path`
 
-**部分路径 URL 格式：**
+## URL 解析规则
 
-- `https://github.com/owner/repo/tree/main/path/to/folder`
-- `https://github.com/owner/repo/blob/main/path/to/file.ext`
+从 `$ARGUMENTS` 中提取信息，识别两种模式：
 
-从 URL 中提取：
+| 模式 | URL 格式 | 提取内容 |
+|------|----------|----------|
+| 完整仓库 | `https://github.com/owner/repo` 或 `.git` 结尾 | owner, repo |
+| 部分路径 | `.../tree/{branch}/path` 或 `.../blob/{branch}/path` | owner, repo, branch, path |
 
-- `owner`: 仓库所有者
-- `repo`: 仓库名称
-- `branch`: 分支名（部分克隆时需要，默认 main）
-- `path`: 文件或文件夹路径（部分克隆时）
+同时检查是否包含 `--no-git` 参数（仅对完整仓库有效）。
 
-### 2. 检查是否需要 --no-git 标志
+## 执行
 
-检查 `$ARGUMENTS` 中是否包含 `--no-git` 参数：
+解析 URL 后，通过 Bash 工具直接执行对应命令。以下为命令模板，将 `{owner}`、`{repo}`、`{path}` 替换为实际解析值：
 
-- 如果包含，设置 `KEEP_GIT=false`
-- 否则设置 `KEEP_GIT=true`（完整克隆默认保留）
-
-### 3. 执行克隆操作
-
-#### 情况 A：完整仓库克隆
+### 完整仓库克隆
 
 ```bash
-# 克隆仓库
 git clone https://github.com/{owner}/{repo}.git
-
-# 如果用户指定了 --no-git，删除 .git 文件夹
-if [ "$KEEP_GIT" = "false" ]; then
-  rm -rf {repo}/.git
-  echo "已删除 .git 文件夹，项目不再有 git 历史"
-fi
 ```
 
-#### 情况 B：部分克隆（文件/文件夹）
-
-使用 sparse-checkout 进行高效部分克隆：
+若包含 `--no-git` 参数，克隆成功后追加执行：
 
 ```bash
-# 创建临时目录
-TEMP_DIR="temp-{repo}-$(date +%s)"
-TARGET_PATH="{path}"  # 从 URL 解析的路径
-
-# 使用稀疏克隆
-git clone --depth 1 --filter=blob:none --sparse https://github.com/{owner}/{repo}.git "$TEMP_DIR"
-cd "$TEMP_DIR"
-
-# 设置稀疏检出路径
-git sparse-checkout set "$TARGET_PATH"
-
-# 获取默认分支名（如果 URL 中未指定）
-# 如果是 tree/blob URL，使用 URL 中的分支；否则尝试 main/master
-
-# 移动目标到上级目录
-# 如果是文件夹，移动整个文件夹
-# 如果是单个文件，只移动该文件
-if [ -d "$TARGET_PATH" ]; then
-  mv "$TARGET_PATH" ../
-else
-  # 获取文件名
-  FILENAME=$(basename "$TARGET_PATH")
-  mv "$TARGET_PATH" "../$FILENAME"
-fi
-
-# 返回并清理临时目录
-cd ..
-rm -rf "$TEMP_DIR"
-
-echo "部分克隆完成：$TARGET_PATH"
+rm -rf {repo}/.git
 ```
 
-### 4. 输出结果
-
-完成后输出：
-
-- 克隆类型（完整/部分）
-- 目标位置
-- 是否保留 git 历史
-
-## 使用示例
+### 部分克隆（文件/文件夹）
 
 ```bash
-# 克隆完整仓库（保留 git 历史）
-/github-smart-clone https://github.com/anthropics/claude-code
-
-# 克隆完整仓库（不保留 git 历史）
-/github-smart-clone https://github.com/anthropics/claude-code --no-git
-
-# 克隆特定文件夹
-/github-smart-clone https://github.com/anthropics/claude-code/tree/main/plugins/plugin-dev/skills
-
-# 克隆特定文件
-/github-smart-clone https://github.com/anthropics/claude-code/blob/main/README.md
+# 创建临时目录，避免与已有文件冲突
+TEMP="temp-{repo}-$(date +%s)"
+# 浅克隆 + 稀疏检出，只下载目标路径
+git clone --depth 1 --filter=blob:none --sparse https://github.com/{owner}/{repo}.git "$TEMP"
+cd "$TEMP"
+git sparse-checkout set "{path}"
+# 文件夹直接移动，单文件提取文件名后移动
+if [ -d "{path}" ]; then mv "{path}" ../; else mv "{path}" "../$(basename {path})"; fi
+cd .. && rm -rf "$TEMP"
 ```
 
-## 注意事项
+## 完成后
 
-1. **部分克隆不保留 git 历史**：只获取文件内容，无版本控制
-2. **完整克隆默认保留 .git**：可用 `--no-git` 移除
-3. 确保 git 已安装并可用
-4. 目标路径不要与现有文件/文件夹冲突
+仅输出一行结果：克隆类型 + 目标位置 + 是否保留 git 历史。不做其他操作。
