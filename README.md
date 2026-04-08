@@ -2,7 +2,7 @@
 
 斜杆命令（Slash Commands）是 Claude Code 中的一种可复用的提示模板，以 Markdown 文件形式存储，通过斜杠命令名`/`的方式快速调用。
 
-本项目整理了我在日常开发中收集或创建的命令，实用性和可靠性上都经过了验证。
+本项目整理了我在日常开发中收集、创建和使用的命令，实用性和可靠性上都经过了验证。
 
 ## 安装命令
 
@@ -11,6 +11,8 @@
 ```bash
 git clone https://github.com/Airmomo/commands.git && cp -r commands/* ~/.claude/commands/ && rm -rf commands
 ```
+
+## 命令列表
 
 ### 开箱即用
 
@@ -21,6 +23,7 @@ git clone https://github.com/Airmomo/commands.git && cp -r commands/* ~/.claude/
 | [/ultrathink](./ultrathink.md)                 | 最大化深度分析                              |
 | [/git-auto-commit](./git-auto-commit.md)       | 分析变更并创建 Git 提交                     |
 | [/github-smart-clone](./github-smart-clone.md) | 智能克隆 Github 仓库，支持仅拉取文件/文件夹 |
+| [/lint-command](./lint-command.md)             | 检查命令文件是否符合开发规范，查漏补缺并修复      |
 
 ### 需 CLI 支持
 
@@ -54,8 +57,9 @@ git clone https://github.com/Airmomo/commands.git && cp -r commands/* ~/.claude/
 | ---------------------------------------- | ------------------------------------------------------- |
 | [/openclaw-doc](./openclaw-doc.md)       | 检索 OpenClaw 官方文档及其 GitHub 仓库代码后回答问题    |
 | [/claude-code-doc](./claude-code-doc.md) | 检索 Claude Code 官方文档及其 GitHub 仓库代码后回答问题 |
+| [/parallel-debug](./parallel-debug.md)       | 并行诊断调试，启动多个独立 Agent 从不同方向竞速排查错误根因并验证修复 |
 
-- 使用`/zread`命令前需安装并连接`ZRead MCP`和`Context7 MCP`。
+- 使用这些命令前需安装并连接`ZRead MCP`和`Context7 MCP`。
 - 安装`Context7 MCP`请参考[Context7-Installation](https://github.com/upstash/context7#installation)
 - 安装`ZRead MCP`请参考[ZRead-Installation](https://docs.bigmodel.cn/cn/coding-plan/mcp/zread-mcp-server)
 
