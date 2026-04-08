@@ -16,14 +16,14 @@ git clone https://github.com/Airmomo/commands.git && cp -r commands/* ~/.claude/
 
 ### 开箱即用
 
-| 命令                                           | 简述                                        |
-| ---------------------------------------------- | ------------------------------------------- |
-| [/think](./think.md)                           | 基础思考增强                                |
-| [/megathink](./megathink.md)                   | 深度思考，综合分析                          |
-| [/ultrathink](./ultrathink.md)                 | 最大化深度分析                              |
-| [/git-auto-commit](./git-auto-commit.md)       | 分析变更并创建 Git 提交                     |
-| [/github-smart-clone](./github-smart-clone.md) | 智能克隆 Github 仓库，支持仅拉取文件/文件夹 |
-| [/lint-command](./lint-command.md)             | 检查命令文件是否符合开发规范，查漏补缺并修复      |
+| 命令                                           | 简述                                                          |
+| ---------------------------------------------- | ------------------------------------------------------------- |
+| [/think](./think.md)                           | 基础思考增强                                                  |
+| [/megathink](./megathink.md)                   | 深度思考，综合分析                                            |
+| [/ultrathink](./ultrathink.md)                 | 最大化深度分析                                                |
+| [/git-auto-commit](./git-auto-commit.md)       | 分析变更并创建 Git 提交                                       |
+| [/github-smart-clone](./github-smart-clone.md) | 智能克隆 Github 仓库，支持仅拉取文件/文件夹                   |
+| [/lint-command](./lint-command.md)             | 检查 Claude Code 斜杠命令文件是否符合开发规范，查漏补缺并修复 |
 
 ### 需 CLI 支持
 
@@ -39,29 +39,18 @@ git clone https://github.com/Airmomo/commands.git && cp -r commands/* ~/.claude/
 
 ### 需 MCP 支持
 
-| 命令                       | 简述                                                 |
-| -------------------------- | ---------------------------------------------------- |
-| [/context7](./context7.md) | 使用 Context7 MCP 查询热门代码库或框架的最新官方文档 |
+| 命令                                     | 简述                                                                  |
+| ---------------------------------------- | --------------------------------------------------------------------- |
+| [/context7](./context7.md)               | 使用 Context7 MCP 查询热门代码库或框架的最新官方文档                  |
+| [/zread](./zread.md)                     | 搜索和阅读 GitHub 仓库的文档、代码和问题                              |
+| [/openclaw-doc](./openclaw-doc.md)       | 检索 OpenClaw 官方文档及其 GitHub 仓库代码后回答问题                  |
+| [/claude-code-doc](./claude-code-doc.md) | 检索 Claude Code 官方文档及其 GitHub 仓库代码后回答问题               |
+| [/parallel-debug](./parallel-debug.md)   | 并行诊断调试，启动多个独立 Agent 从不同方向竞速排查错误根因并验证修复 |
 
-- 使用`/context7`命令前需安装并连接`Context7 MCP`。
+- 使用这些命令前需安装并连接所需的 MCP 服务。
 - 安装`Context7 MCP`请参考[Context7-Installation](https://github.com/upstash/context7#installation)
-
-| 命令                 | 简述                                     |
-| -------------------- | ---------------------------------------- |
-| [/zread](./zread.md) | 搜索和阅读 GitHub 仓库的文档、代码和问题 |
-
-- 使用`/zread`命令前需安装并连接`ZRead MCP`。
-- 安装`ZRead MCP`请参考[ZRead-Installation](https://docs.bigmodel.cn/cn/coding-plan/mcp/zread-mcp-server)
-
-| 命令                                     | 简述                                                    |
-| ---------------------------------------- | ------------------------------------------------------- |
-| [/openclaw-doc](./openclaw-doc.md)       | 检索 OpenClaw 官方文档及其 GitHub 仓库代码后回答问题    |
-| [/claude-code-doc](./claude-code-doc.md) | 检索 Claude Code 官方文档及其 GitHub 仓库代码后回答问题 |
-| [/parallel-debug](./parallel-debug.md)       | 并行诊断调试，启动多个独立 Agent 从不同方向竞速排查错误根因并验证修复 |
-
-- 使用这些命令前需安装并连接`ZRead MCP`和`Context7 MCP`。
-- 安装`Context7 MCP`请参考[Context7-Installation](https://github.com/upstash/context7#installation)
-- 安装`ZRead MCP`请参考[ZRead-Installation](https://docs.bigmodel.cn/cn/coding-plan/mcp/zread-mcp-server)
+- 安装`开源仓库 MCP`请参考[ZRead-Installation](https://docs.bigmodel.cn/cn/coding-plan/mcp/zread-mcp-server)
+- 安装`联网搜索 MCP`请参考[ZWeb-Search-Installation](https://docs.bigmodel.cn/cn/coding-plan/mcp/search-mcp-server)
 
 ## 如何创建一个优秀的命令
 
