@@ -211,3 +211,4 @@ __marimo__/
 temp/
 .claude/
 cc-commands-soft-install.sh
+cc-commands-install.bat
