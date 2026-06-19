@@ -14,43 +14,66 @@ git clone https://github.com/Airmomo/commands.git && cp -r commands/* ~/.claude/
 
 ## 命令列表
 
-### 开箱即用
+### 思考增强类
 
-| 命令                                           | 简述                                                          |
-| ---------------------------------------------- | ------------------------------------------------------------- |
-| [/think](./think.md)                           | 基础思考增强                                                  |
-| [/megathink](./megathink.md)                   | 深度思考，综合分析                                            |
-| [/ultrathink](./ultrathink.md)                 | 最大化深度分析                                                |
-| [/git-auto-commit](./git-auto-commit.md)       | 分析变更并创建 Git 提交                                       |
-| [/github-smart-clone](./github-smart-clone.md) | 智能克隆 Github 仓库，支持仅拉取文件/文件夹                   |
-| [/lint-command](./lint-command.md)             | 检查 Claude Code 斜杠命令文件是否符合开发规范，查漏补缺并修复 |
+| 命令 | 简述 |
+|------|------|
+| [/think](./think.md) | 基础思考增强 |
+| [/megathink](./megathink.md) | 深度思考，综合分析 |
+| [/ultrathink](./ultrathink.md) | 最大化深度分析 |
 
-### 需 CLI 支持
+---
 
-| 命令                               | 简述                                                 |
-| ---------------------------------- | ---------------------------------------------------- |
+### 版本控制类
+
+| 命令 | 简述 |
+|------|------|
+| [/git-auto-commit](./git-auto-commit.md) | 分析变更并创建 Git 提交 |
+| [/github-smart-clone](./github-smart-clone.md) | 智能克隆 Github 仓库，支持仅拉取文件/文件夹 |
+
+---
+
+### 文档与知识检索类
+
+| 命令 | 简述 |
+|------|------|
 | [/context7-cli](./context7-cli.md) | 使用 Context7 CLI 查询热门代码库或框架的最新官方文档 |
+| [/context7](./context7.md) | 使用 Context7 MCP 查询热门代码库或框架的最新官方文档 |
+| [/zread](./zread.md) | 搜索和阅读 GitHub 仓库的文档、代码和问题 |
+| [/openclaw-doc](./openclaw-doc.md) | 检索 OpenClaw 官方文档及其 GitHub 仓库代码后回答问题 |
+| [/claude-code-doc](./claude-code-doc.md) | 检索 Claude Code 官方文档及其 GitHub 仓库代码后回答问题 |
 
-- `/context7-cli`命令能够自动确保在运行命令之前CLI已安装，也可自行运行`npm install -g ctx7@latest`安装 Context7 CLI。
-- 无需预先配置`CONTEXT7_API_KEY`，当超出免费配额或需要更高的请求频率时才会提示认证建议。
+---
+
+### 开发调试类
+
+| 命令 | 简述 |
+|------|------|
+| [/lint-command](./lint-command.md) | 检查斜杠命令文件是否符合开发规范，查漏补缺并修复 |
+| [/parallel-debug](./parallel-debug.md) | 并行诊断调试，启动多个独立 Agent 从不同方向竞速排查错误根因并验证修复 |
+
+---
+
+### 按依赖类型汇总
+
+| 类型 | 命令 |
+|------|------|
+| **开箱即用** | `/think` `/megathink` `/ultrathink` `/git-auto-commit` `/github-smart-clone` `/lint-command` |
+| **需 CLI 支持** | `/context7-cli` |
+| **需 MCP 支持** | `/context7` `/zread` `/openclaw-doc` `/claude-code-doc` `/parallel-debug` |
+
+---
+
+### MCP 服务安装参考
+
+| MCP 服务 | 安装参考 |
+|----------|----------|
+| Context7 MCP | [Context7-Installation](https://github.com/upstash/context7#installation) |
+| 开源仓库 MCP (ZRead) | [ZRead-Installation](https://docs.bigmodel.cn/cn/coding-plan/mcp/zread-mcp-server) |
+| 联网搜索 MCP | [ZWeb-Search-Installation](https://docs.bigmodel.cn/cn/coding-plan/mcp/search-mcp-server) |
 
 > [!NOTE]
-> 如需可以通过[context7.com/dashboard](https://context7.com/dashboard)获取一个免费的API密钥以获得更高的限制。
-
-### 需 MCP 支持
-
-| 命令                                     | 简述                                                                  |
-| ---------------------------------------- | --------------------------------------------------------------------- |
-| [/context7](./context7.md)               | 使用 Context7 MCP 查询热门代码库或框架的最新官方文档                  |
-| [/zread](./zread.md)                     | 搜索和阅读 GitHub 仓库的文档、代码和问题                              |
-| [/openclaw-doc](./openclaw-doc.md)       | 检索 OpenClaw 官方文档及其 GitHub 仓库代码后回答问题                  |
-| [/claude-code-doc](./claude-code-doc.md) | 检索 Claude Code 官方文档及其 GitHub 仓库代码后回答问题               |
-| [/parallel-debug](./parallel-debug.md)   | 并行诊断调试，启动多个独立 Agent 从不同方向竞速排查错误根因并验证修复 |
-
-- 使用这些命令前需安装并连接所需的 MCP 服务。
-- 安装`Context7 MCP`请参考[Context7-Installation](https://github.com/upstash/context7#installation)
-- 安装`开源仓库 MCP`请参考[ZRead-Installation](https://docs.bigmodel.cn/cn/coding-plan/mcp/zread-mcp-server)
-- 安装`联网搜索 MCP`请参考[ZWeb-Search-Installation](https://docs.bigmodel.cn/cn/coding-plan/mcp/search-mcp-server)
+> Context7 API 密钥可通过 [context7.com/dashboard](https://context7.com/dashboard) 免费获取，以提高请求频率限制。
 
 ## 如何创建一个优秀的命令
 
